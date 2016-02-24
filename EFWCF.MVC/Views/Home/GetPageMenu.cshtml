@@ -1,0 +1,94 @@
+﻿@model EFWCF.MVC.ModuleService.ModuleDTO
+<script type="text/javascript">
+    function convert(rows) {
+        function exists(rows, parentId) {
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i].id == parentId) return true;
+            }
+            return false;
+        }
+
+        var nodes = [];
+        // get the top level nodes
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            if (!exists(rows, row.parentId)) {
+                nodes.push({
+                    id: row.id,
+                    text: row.name,
+                    url: row.url
+                });
+            }
+        }
+
+        var toDo = [];
+        for (var i = 0; i < nodes.length; i++) {
+            toDo.push(nodes[i]);
+        }
+        while (toDo.length) {
+            var node = toDo.shift();	// the parent node
+            // get the children nodes
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                if (row.parentId == node.id) {
+                    var child = { id: row.id, text: row.name, url: row.url };
+                    if (node.children) {
+                        node.children.push(child);
+                    } else {
+                        node.children = [child];
+                    }
+                    toDo.push(child);
+                }
+            }
+        }
+        return nodes;
+    }
+
+    @*       $.ajax({
+            url: '/Home/GetModule/@Model.ID',
+            success: function (ret) {
+                alert(ret);
+                var treedata = convert(ret);
+                alert(treedata);
+                $('#tt').tree({
+                    data: treedata
+                });
+            },
+            error: function (err) {
+                alert(err);
+            }
+        });*@
+    $(function () {
+        $('#tt_@Model.ID').tree({
+            url: '/Home/GetModule/@Model.ID',
+            loadFilter: function (rows) {
+                return convert(rows);
+            },
+            onClick: function (node) {
+                AddTabs(node.url, node.text, "");
+                //currentOrg = node.id
+                //$('#dg').datagrid({
+                //    url: "/Account/UserList/?orgid=" + node.id
+                //});
+
+                //$('#dg').datagrid('reload');
+            },
+            onLoadSuccess: function () {
+                var t = $(this);
+                t.tree("collapseAll");
+            }
+        });
+    });
+</script>
+<ul data-options="animate:true,lines:true" id="tt_@Model.ID">
+
+    @*<li>功能2</li>
+        <li data-options="state:'closed'">
+            <span>闭合的</span>
+            <ul>
+                <li>闭合的1</li>
+                <li>闭合的2</li>
+                <li>闭合的3</li>
+            </ul>
+        </li>*@
+</ul>

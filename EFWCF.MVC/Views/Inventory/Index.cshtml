@@ -1,0 +1,41 @@
+﻿@model IEnumerable<EFWCF.MVC.MaterialBaseInfoService.MaterialBaseInfoDTO>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/easyui/themes/bootstrap/easyui.css" rel="stylesheet" />
+    <link href="~/easyui/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+
+        });
+    </script>
+</head>
+<body>
+    <div id="tb">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+    </div>
+    <div>
+        <table class="easyui-datagrid" data-options="fitColumns:true,singleSelect:true,url:'/Inventory/GetJson',pagePosition:'bottom',pageNumber:10,pageSize:10">
+            <thead>
+                <tr>
+                    <th data-options="field:'MaterialName',width:100">材料名称</th>
+                    <th data-options="field:'MaterialNo',width:100">材料编号</th>
+                    <th data-options="field:'MaterialUnit',width:100">材料单位</th>
+                    <th data-options="field:'MaterialModel',width:100">材料类型</th>
+                    <th data-options="field:'MaterialPrice',width:100">材料单价</th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+</body>
+</html>

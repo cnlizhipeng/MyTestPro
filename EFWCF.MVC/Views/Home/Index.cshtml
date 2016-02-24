@@ -1,0 +1,134 @@
+﻿@model IEnumerable<EFWCF.MVC.ModuleService.ModuleDTO>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/easyui/themes/bootstrap/easyui.css" rel="stylesheet" />
+    <link href="~/easyui/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/easyui/jquery.easyui.min.js"></script>
+
+    <script type="text/javascript">
+        function AddTabs(src, strtitle, stricon) {
+            var findtab = $("#maintabs").tabs("exists", strtitle);
+            if (findtab == false) {
+                var content = '<iframe scrolling="auto" id="a" frameborder="0"  src="' + src + '" style="width:100%;height:100%;"></iframe>';
+                $('#maintabs').tabs('add', {
+                    title: strtitle,
+                    content: content,
+                    closable: true,
+                    icon: stricon
+                });
+            }
+            else {
+                $("#maintabs").tabs("select", strtitle);
+            }
+        }
+        $(document).ready(function () {
+            var content = '<iframe scrolling="auto" id="a" frameborder="0"  src="/DisplayString/Index" style="width:100%;height:100%;"></iframe>';
+            $('#maintabs').tabs('add', {
+                title: "我的标题",
+                content: content,
+                closable: true,
+                icon: "icon-ok"
+            });
+
+            //$("#msg").val("请填写要发送的消息！");
+            //$("#sendmsg").click(function () {
+            //    var value = $("#msg").val();
+            //    //$.post("/Home/TestAjax", {}, function (data, status) {
+            //    //    alert("Data: " + data + "\nStatus: " + status);
+            //    //});
+            //    //$.post("/Home/SendMessage", { msg: value, listclient: "" }, function (data, status) {
+            //    //    if (status == "success")
+            //    //        alert(data);
+            //    //    else
+            //    //        alert(status);
+            //    //})
+            //    $.ajax({
+            //        type: "Post",
+            //        url: "/Home/SendMessage",
+            //        data: { "msg": value },
+            //        success: function (data) {
+            //            alert(data);
+            //        },
+            //        error: function (msg) {
+            //            alert(msg);
+            //        }
+            //    });
+            //    //$.ajax({
+            //    //    type: "Post",
+            //    //    url: "/Home/TestAjax",
+            //    //    data: {},
+            //    //    success: function (data) {
+            //    //        alert(data);
+            //    //    },
+            //    //    error: function (msg) {
+            //    //        alert(msg);
+            //    //    }
+            //    //});
+            //});
+        });
+    </script>
+</head>
+<body>
+    <div class="easyui-layout" data-options="fit:true">
+        @* 上层标题 *@
+        <div data-options="region:'north'" style="height: 50px"></div>
+        @*左侧结构*@
+        <div data-options="region:'west',split:true" title="West" style="width: 200px;">
+            <div class="easyui-accordion" data-options="fit:true">
+                @{
+                    var qgoups = from find in Model
+                                 where find.ModuleType.Equals("Page")
+                                 select find;
+                    foreach (var groupitem in qgoups)
+                    {
+                        <div title="@groupitem.ModuleCNName" data-options="iconCls:'icon-ok',href:'/Home/GetPageMenu/@groupitem.ID'" style="overflow: auto; padding: 10px;">
+
+                        </div>
+                    }
+                }
+                @*<div title="" data-options="iconCls:'icon-ok'" style="overflow: auto; padding: 10px;">
+                        <h3 style="color: #0099FF;">Accordion for jQuery</h3>
+                        <p>Accordion is a part of easyui framework for jQuery. It lets you define your accordion component on web page more easily.</p>
+                    </div>
+                    <div title="我的任务1">
+                        <ul class="easyui-tree">
+                            <li>功能1</li>
+                            <li>功能2</li>
+                            <li data-options="state:'closed'">
+                                <span>闭合的</span>
+                                <ul>
+                                    <li>闭合的1</li>
+                                    <li>闭合的2</li>
+                                    <li>闭合的3</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span>展开的</span>
+                                <ul>
+                                    <li>展开的1</li>
+                                    <li>展开的2</li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div title="我的任务2"></div>
+                    <div title="我的任务3"></div>
+                    <div title="我的任务4"></div>*@
+            </div>
+        </div>
+        @*内容展示区域*@
+        <div data-options="region:'center',title:'Main Title',iconCls:'icon-ok'">
+            <div class="easyui-tabs" data-options="fit:true" id="maintabs">
+            </div>
+        </div>
+        @*底部内容*@
+        <div data-options="region:'south',split:true" style="height: 50px;"></div>
+    </div>
+</body>
+</html>
