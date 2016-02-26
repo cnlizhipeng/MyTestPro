@@ -22,42 +22,52 @@ namespace EFWCF.MVC.Controllers
         //    SessionInstanceContext = new InstanceContext(SessionCallback);
         //    SessionManagementClient = new SessionManagement.SessionManagementClient(SessionInstanceContext);
         //}
+
+        public ActionResult Login()
+        {
+            UserDTO u = new UserDTO();
+            return Content("");
+        }
+
         public ActionResult Index()
         {
-            ModuleService msc = new ModuleService();
-            var q = msc.GetList(null);
-            return View(q);
+            //ModuleService msc = new ModuleService();
+            //var q = msc.GetList(null);
+            //return View(q);
+            return null;
         }
 
         public ActionResult GetPageMenu(int id)
         {
-            ModuleService msc = new ModuleService();
-            var lstmodule = msc.GetSingleWithKeys(id);
-            return PartialView("GetPageMenu", lstmodule);
+            //ModuleService msc = new ModuleService();
+            //var lstmodule = msc.GetSingleWithKeys(id);
+            //return PartialView("GetPageMenu", lstmodule);
+            return null;
         }
 
         public string GetModule(int id)
         {
-            ModuleService msc = new ModuleService();
-            var lstmodule = msc.GetList(null);
-            var findp = from q in lstmodule
-                        where q.PID == id
-                        orderby q.ViewOrder
-                        select q;
-            List<ModuleDTO> lstResult = new List<ModuleDTO>();
-            foreach (var item in findp)
-            {
-                lstResult.Add(item);
-                GetModuleSon(ref lstResult, lstmodule, item.ID);
-            }
-            JArray json = new JArray(from r in lstResult
-                                     select new JObject(
-                                         new JProperty("id", r.ID),
-                                         new JProperty("parentId", r.PID),
-                                         new JProperty("name", r.ModuleCNName),
-                                         new JProperty("url","/Inventory/Index")
-                                         ));
-            return json.ToString();
+            //ModuleService msc = new ModuleService();
+            //var lstmodule = msc.GetList(null);
+            //var findp = from q in lstmodule
+            //            where q.PID == id
+            //            orderby q.ViewOrder
+            //            select q;
+            //List<ModuleDTO> lstResult = new List<ModuleDTO>();
+            //foreach (var item in findp)
+            //{
+            //    lstResult.Add(item);
+            //    GetModuleSon(ref lstResult, lstmodule, item.ID);
+            //}
+            //JArray json = new JArray(from r in lstResult
+            //                         select new JObject(
+            //                             new JProperty("id", r.ID),
+            //                             new JProperty("parentId", r.PID),
+            //                             new JProperty("name", r.ModuleCNName),
+            //                             new JProperty("url","/Inventory/Index")
+            //                             ));
+            //return json.ToString();
+            return "";
         }
 
         private void GetModuleSon(ref List<ModuleDTO> lst, IEnumerable<ModuleDTO> source, int pid)

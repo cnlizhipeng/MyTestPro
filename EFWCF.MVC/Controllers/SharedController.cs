@@ -20,9 +20,10 @@ namespace EFWCF.MVC.Controllers
         [HttpPost]
         public ActionResult ModuleMenu(string modulename,int id)
         {
-            ModuleMenuService mmsc = new ModuleMenuService();
-            var result = mmsc.GetMenuWithModuleID(id);
-            return View(result);
+            //ModuleMenuService mmsc = new ModuleMenuService();
+            //var result = mmsc.GetMenuWithModuleID(id);
+            //return View(result);
+            return null;
         }
     }
 }
